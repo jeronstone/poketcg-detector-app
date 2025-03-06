@@ -1,0 +1,12 @@
+secret.py
+pyvenv.cfg
+card_imgs_desc/
+card_ims/
+PokePhotos-001/
+lib/
+lib64/
+include/
+bin/
+/__pycache__
+share/
+testing/
