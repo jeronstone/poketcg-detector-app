@@ -1,9 +1,5 @@
 pokemontcgsdk
 requests
-torch
-torchvision==0.20.0
-tensorflow==2.16.1
-keras==3.0.0
 opencv-python
 matplotlib
 scipy
@@ -12,7 +8,8 @@ scikit-learn
 git+https://github.com/openai/CLIP.git
 open_clip_torch
 sentence_transformers
-tf-keras
 pillow-heif
 easyocr
 dill
+flask
+flask-cors

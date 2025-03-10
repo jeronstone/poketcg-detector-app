@@ -1,0 +1,10 @@
+body {
+    background-color: rgb(255, 0, 0);
+}
+h1 {
+    color: blue;
+}
+.card {
+    margin: 0 auto; /* Added */
+    float: none; /* Added */
+}

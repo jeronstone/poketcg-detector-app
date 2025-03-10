@@ -1,4 +1,4 @@
-import torch
+#import torch
 import open_clip
 import cv2
 from sentence_transformers import util
@@ -11,15 +11,15 @@ import easyocr
 class Similarity():
     
     def __init__(self, imgproc=False):
-        if imgproc:
-            self.device = "cuda" if torch.cuda.is_available() else "cpu"
-            m, _, pp = open_clip.create_model_and_transforms('ViT-B-16-plus-240', pretrained="laion400m_e32")
-            self.model = m
-            self.preprocess = pp
-            self.model.to(self.device)
+        # if imgproc:
+        #     self.device = "cuda" if torch.cuda.is_available() else "cpu"
+        #     m, _, pp = open_clip.create_model_and_transforms('ViT-B-16-plus-240', pretrained="laion400m_e32")
+        #     self.model = m
+        #     self.preprocess = pp
+        #     self.model.to(self.device)
         self.reader = easyocr.Reader(['en'])
 
-
+    '''
     def imageEncoder(self, img):
         img1 = Image.fromarray(img).convert('RGB')
         img1 = self.preprocess(img1).unsqueeze(0).to(self.device)
@@ -47,7 +47,7 @@ class Similarity():
         score = round(float(cos_scores[0][0])*100, 2)
         #print(f'Similarity Time: {time.time() - st}')
         return score
-
+    '''
     def get_text(self, img):
         result = self.reader.readtext(img, detail=0)
         result = " ".join([word for line in result for word in line.split()])
