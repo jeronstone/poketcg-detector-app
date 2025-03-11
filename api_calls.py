@@ -34,15 +34,22 @@ def get_price(path_name):
     card = Card.find(pth[-1])
     return card.cardmarket.prices.averageSellPrice
 
+def get_image(path_name):
+    head, tail = os.path.split(path_name)
+    pth = tail[:-4]
+    pth = pth.split('_')
+    card = Card.find(pth[-1])
+    return card.images.large
+
 def get_price_c(c):
     return c.cardmarket.prices.averageSellPrice
     
 # run this to download every pic lol
 if __name__ == '__main__':
 
-    #p = get_price('/home/jestone/tcgdetector/card_imgs_desc/Absol G_1_Rare Holo_pl3-1.jpg')
-    #print(p)
-    #exit(0)
+    # p = get_card('/home/jestone/tcgdetector/card_imgs_desc/Absol G_1_Rare Holo_pl3-1.jpg')
+    # print(p.images.large)
+    # exit(0)
 
     # grab all Card objects (count 18,685)
     cards = Card.all()

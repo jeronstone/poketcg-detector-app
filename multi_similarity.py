@@ -8,12 +8,10 @@ import glob
 from api_calls import get_price, get_splits
 
 IMAGE_RECG = False
-#generate_tensors(finame='coopertest_svstar', only=2)
+#generate_tensors(finame='allcards', only=2)
 
-data, pths, vectorizer, matrix = load_tensors(finame='coopertest_svstar')
+data, pths, vectorizer, matrix = load_tensors(finame='allcards')
 
-print(len(pths))
-exit(0)
 #print(vectorizer)
 #print(matrix)
 sim = Similarity()

@@ -16,7 +16,7 @@ firebase_admin.initialize_app(cred, {
 bucket = storage.bucket()
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 UPLOAD_FOLDER = "uploads"  # Folder to store uploaded images
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)  # Ensure the folder exists
@@ -24,6 +24,7 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)  # Ensure the folder exists
 data, pths, vectorizer, matrix = load_tensors(finame='coopertest_svstar')
 
 @app.route('/upload-image', methods=['POST'])
+@cross_origin()
 def upload_image():
     if 'image' not in request.files:
         return jsonify({'error': 'No image provided'}), 400
@@ -37,6 +38,8 @@ def upload_image():
 
     # Make the file publicly accessible
     blob.make_public()
+
+    os.remove(image_path)
 
     # Process the image with your Python script
     return jsonify({'message': 'Image uploaded successfully', 'url': blob.public_url})
@@ -75,4 +78,5 @@ def run_script():
         return jsonify({'error': str(e)})
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=8080)
+    port = int(os.environ.get("PORT", 8080))
+    app.run(host="0.0.0.0", port=port)

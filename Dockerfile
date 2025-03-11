@@ -1,17 +1,19 @@
-# Use an official Python runtime as a parent image
 FROM python:3.10
 
-# Set the working directory
 WORKDIR /app
 
-# Copy the current directory contents into the container
-COPY . /app
+COPY requirements.txt /app
+RUN pip install -r requirements.txt
 
-# Install dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+COPY api_calls.py /app
+COPY app.py /app
+COPY index.py /app
+COPY similarity.py /app
+COPY generate_tensors.py /app
+COPY secret.py /app
+COPY tfidf_allcards /app
+COPY .dockerignore /app
 
-# Expose port 8080 for Cloud Run
 EXPOSE 8080
 
-# Command to run the application
-CMD ["gunicorn", "-b", "0.0.0.0:8080", "app:app"]
+CMD ["gunicorn", "-b", "0.0.0.0:8080", "-w", "2", "app:app"]

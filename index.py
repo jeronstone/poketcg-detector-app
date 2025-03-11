@@ -82,7 +82,7 @@ def get_prediction(imtotest, data, pths, vectorizer, matrix):
         "set": splits[-1],
         "score": round(score, 2),
         "price": price,
-        "imagelink": pths[val[0]][2:],
+        "imagelink": get_image(pths[val[0]][2:]),
         "time": time.time()-st
     }
     print(json.dumps(ret))
