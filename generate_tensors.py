@@ -11,7 +11,7 @@ def generate_tensors(finame='yayayay', only=0):
 
     sim = Similarity()
 
-    search_path = os.path.join('./card_imgs_desc/', '*sv6*')
+    search_path = os.path.join('./card_imgs_desc/', '*sv*')
     files = glob.glob(search_path)
 
     # for i, f in enumerate(files):

@@ -8,9 +8,12 @@ import glob
 from api_calls import get_price, get_splits
 
 IMAGE_RECG = False
-#generate_tensors(finame='coopertest_sv6', only=2)
+#generate_tensors(finame='coopertest_svstar', only=2)
 
-data, pths, vectorizer, matrix = load_tensors(finame='coopertest_sv6')
+data, pths, vectorizer, matrix = load_tensors(finame='coopertest_svstar')
+
+print(len(pths))
+exit(0)
 #print(vectorizer)
 #print(matrix)
 sim = Similarity()
@@ -26,8 +29,8 @@ skiplist = ['/home/jestone/tcgdetector/PokePhotos-001/ConvertedFiles/sizzlipede3
 
 for imtotest in files:
 
-    if imtotest in skiplist:
-        continue
+    # if imtotest in skiplist:
+    #     continue
 
     print('--------------------')
     print(f'TESTING: {imtotest}')
@@ -67,4 +70,4 @@ for imtotest in files:
     #     head, tail = os.path.split(data[v[0]]['path'])
     #     print(f'Card: {tail}, Score: {v[1]}')
     print(f'PREDICTED CARD: {get_splits(pths[val[-1][0]])} (score {val[-1][1]})')
-    print(f'This card costs ${get_price(pths[val[-1][0]])}!')
+    #print(f'This card costs ${get_price(pths[val[-1][0]])}!')

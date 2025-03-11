@@ -5,6 +5,15 @@ import os
 from generate_tensors import load_tensors
 import json
 from index import get_prediction
+import firebase_admin
+from firebase_admin import credentials, storage
+from secret import fbbucket
+
+cred = credentials.Certificate("/home/jestone/tcgdetector/tcgdetector-firebase-adminsdk-fbsvc-bd0377fa6e.json")
+firebase_admin.initialize_app(cred, {
+    "storageBucket": fbbucket
+})
+bucket = storage.bucket()
 
 app = Flask(__name__)
 CORS(app)
@@ -12,7 +21,7 @@ CORS(app)
 UPLOAD_FOLDER = "uploads"  # Folder to store uploaded images
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)  # Ensure the folder exists
 
-data, pths, vectorizer, matrix = load_tensors(finame='coopertest_sv6')
+data, pths, vectorizer, matrix = load_tensors(finame='coopertest_svstar')
 
 @app.route('/upload-image', methods=['POST'])
 def upload_image():
@@ -23,9 +32,23 @@ def upload_image():
     image_path = os.path.join(UPLOAD_FOLDER, image.filename)
     image.save(image_path)  # Save the uploaded image
 
-    # Process the image with your Python script
-    return jsonify({'message': 'Image uploaded successfully', 'image_path': image_path})
+    blob = bucket.blob(f"pokeim_uploads/{image.filename}")
+    blob.upload_from_filename(image_path, content_type=image.content_type)
 
+    # Make the file publicly accessible
+    blob.make_public()
+
+    # Process the image with your Python script
+    return jsonify({'message': 'Image uploaded successfully', 'url': blob.public_url})
+
+'''
+@app.route('/get-image/<filename>', methods=['GET'])
+def get_image_url(filename):
+    blob = bucket.blob(f"pokeim_uploads/{filename}")
+    signed_url = blob.generate_signed_url(expiration=3600)
+    
+    return jsonify({"url": signed_url})
+'''
 @app.route('/run-script', methods=['POST'])
 def run_script():
     try:

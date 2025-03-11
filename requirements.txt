@@ -13,3 +13,4 @@ easyocr
 dill
 flask
 flask-cors
+firebase-admin
